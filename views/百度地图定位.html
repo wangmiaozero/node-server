@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/api?v=2.0&ak=Te3KBpHdvzUouk7AnUyhcevrxB5Fbh6y"></script>
+    <script type="text/javascript"
+        src="http://webapi.amap.com/maps?v=1.4.0&key=3c3ff6933cb1c09c87d09de335612321"></script>
+</head>
+
+<body>
+    <div id="allmap" style="height:500px;"></div>
+
+
+    <script type="text/javascript">
+    function getLocation(){ 
+    if (navigator.geolocation){ 
+        navigator.geolocation.getCurrentPosition(showPosition,showError); 
+    }else{ 
+        alert("浏览器不支持地理定位。"); 
+    } 
+}
+        function getLocation() {
+
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+
+            }
+
+            else { x.innerHTML = "Geolocation is not supported by this browser.浏览器不支持HTML5"; } //浏览器不支持HTML5.
+
+        }
+
+        var map = new BMap.Map("allmap");
+
+        var point = new BMap.Point(116.331398, 39.897445);
+
+        map.centerAndZoom(point, 12);
+
+
+
+        var geolocation = new BMap.Geolocation();  //实例化浏览器定位对象。
+
+        //下面是getCurrentPosition方法。调用该对象的 getCurrentPosition()，与HTML5不同的是，这个方法原型是 getCurrentPosition(callback:function[, options: PositionOptions])，也就是说无论成功与否都执行回调函数1，第二个参数是关于位置的选项。 因此能否定位成功需要在回调函数1中自己判断。
+
+        geolocation.getCurrentPosition(function (r) {   //定位结果对象会传递给r变量
+
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {  //通过Geolocation类的getStatus()可以判断是否成功定位。
+
+                var mk = new BMap.Marker(r.point);    //基于定位的这个点的点位创建marker
+
+                map.addOverlay(mk);    //将marker作为覆盖物添加到map地图上
+
+                map.panTo(r.point);   //将地图中心点移动到定位的这个点位置。注意是r.point而不是r对象。
+
+                alert('您的位置：' + r.point.lng + ',' + r.point.lat);  //r对象的point属性也是一个对象，这个对象的lng属性表示经度，lat属性表示纬度。
+
+            }
+
+            else {
+
+                alert('failed' + this.getStatus());
+
+            }
+
+        }, { enableHighAccuracy: true })
+
+//关于状态码
+
+//BMAP_STATUS_SUCCESS 检索成功。对应数值“0”。
+
+//BMAP_STATUS_CITY_LIST 城市列表。对应数值“1”。
+
+//BMAP_STATUS_UNKNOWN_LOCATION 位置结果未知。对应数值“2”。
+
+//BMAP_STATUS_UNKNOWN_ROUTE 导航结果未知。对应数值“3”。
+
+//BMAP_STATUS_INVALID_KEY 非法密钥。对应数值“4”。
+
+//BMAP_STATUS_INVALID_REQUEST 非法请求。对应数值“5”。
+
+//BMAP_STATUS_PERMISSION_DENIED 没有权限。对应数值“6”。(自 1.1 新增)
+
+//BMAP_STATUS_SERVICE_UNAVAILABLE 服务不可用。对应数值“7”。(自 1.1 新增)
+
+//BMAP_STATUS_TIMEOUT 超时。对应数值“8”。(自 1.1 新增)
+
+    </script>
+
+</body>
+
+</html>

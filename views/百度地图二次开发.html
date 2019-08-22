@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+ 
+	<head>
+		<meta charset="UTF-8">
+		<title>百度地图初始化操作</title>
+		<style type="text/css">
+			#container {
+				width: 50%;
+				height: 500px;
+			}
+		</style>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+	</head>
+ 
+	<body>
+		<div id="container"></div>
+		<script type="text/javascript">
+			//百度地图API功能    
+			var map = new BMap.Map("container");
+			map.centerAndZoom(new BMap.Point(116.331398, 39.897445), 10);
+			//初始化操作
+			map.enableScrollWheelZoom(); //启用滚轮放大缩小，默认禁用。
+			map.enableDragging(); //启用地图拖拽，默认启用。
+			map.enableDoubleClickZoom(); //启用双击放大，默认启用。
+			map.enableKeyboard(); //启用键盘操作，默认禁用。键盘的上、下、左、右键可连续移动地图。同时按下其中两个键可使地图进行对角移动。PgUp、PgDn、Home和End键会使地图平移其1/2的大小。+、-键会使地图放大或缩小一级。
+			map.enableInertialDragging(); //	启用地图惯性拖拽，默认禁用。
+			map.enableContinuousZoom(); //	启用连续缩放效果，默认禁用。
+			map.enablePinchToZoom(); //启用双指操作缩放，默认启用。
+			map.enableAutoResize(); //启用自动适应容器尺寸变化，默认启用。
+			//添加控件
+			map.addControl(new BMap.NavigationControl({
+				type: BMAP_NAVIGATION_CONTROL_LARGE, //表示显示完整的平移缩放控件。
+//				type: BMAP_NAVIGATION_CONTROL_SMALL, //表示显示小型的平移缩放控件。
+//				type: BMAP_NAVIGATION_CONTROL_PAN, //表示只显示控件的平移部分功能。
+//				type: BMAP_NAVIGATION_CONTROL_ZOOM, //表示只显示控件的缩放部分功能。
+				anchor: BMAP_ANCHOR_TOP_LEFT, //表示控件定位于地图的左上角。
+//				anchor: BMAP_ANCHOR_TOP_RIGHT, //表示控件定位于地图的右上角。
+//				anchor: BMAP_ANCHOR_BOTTOM_LEFT, //表示控件定位于地图的左下角。
+//				anchor: BMAP_ANCHOR_BOTTOM_RIGHT, //表示控件定位于地图的右下角。
+				offset: new BMap.Size(20, -10)
+			})); //设置地图平移缩放控件，PC端默认位于地图左上方type控件外观,anchor控件的停靠位置,offset偏移的位置
+			map.addControl(new BMap.MapTypeControl({
+				type: BMAP_MAPTYPE_CONTROL_HORIZONTAL,//按钮水平方式展示，默认采用此类型展示。
+//				type: BMAP_MAPTYPE_CONTROL_DROPDOWN,//按钮呈下拉列表方式展示。
+//				type: BMAP_MAPTYPE_CONTROL_MAP//以图片方式展示类型控件，设置该类型后无法指定maptypes属性。
+				mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]
+			}));//设置地图类型控件,type控件样式,mapTypes控件展示的地图类型，默认为普通图、卫星图、卫星加路网混合图和三维图。通过此属性可配置控件展示的地图类型。
+			map.addControl(new BMap.OverviewMapControl({
+					isOpen: true,
+					anchor: BMAP_ANCHOR_BOTTOM_RIGHT
+			}));//设置地图类型控件缩略地图控件，默认位于地图右下方,isOpen缩略图是否隐藏
+			 map.addControl(new BMap.ScaleControl());//设置比例尺控件
+		</script>
+	</body>
+ 
+</html>
